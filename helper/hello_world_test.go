@@ -8,6 +8,15 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+//fungsi TestMain bisa dimanfaatkan agar bisa mirip dengan before dan after test
+func TestMain(m *testing.M) {
+	//before
+	fmt.Println("Selamat Datang di Unit Test")
+	m.Run()
+	//after
+	fmt.Println("Good bye Unit Test")
+}
+
 //Dengan menggunakan require, jika pengecekan gagal maka assert akan memanggil FailNow()
 // berarti eksekusi unit test tidak akan dilanjutkan
 func TestHelloWorldRequire(t *testing.T) {
