@@ -8,6 +8,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// function subtest memungkinkan untuk memiliki test didalam unit test
+func TestSubTest(t *testing.T) {
+	t.Run("Farhan", func(t *testing.T) {
+		result := HelloWorld("Farhan")
+		require.Equal(t, "Hello Farhan", result)
+	})
+	t.Run("HR", func(t *testing.T) {
+		result := HelloWorld("HR")
+		require.Equal(t, "Hello HR", result)
+	})
+}
+
 //fungsi TestMain bisa dimanfaatkan agar bisa mirip dengan before dan after test
 func TestMain(m *testing.M) {
 	//before
