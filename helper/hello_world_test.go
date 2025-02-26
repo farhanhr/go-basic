@@ -8,6 +8,33 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// Table test
+func TestTable(t *testing.T) {
+	tests := []struct {
+		name string
+		request string
+		expected string
+	} {
+		{
+			name : "Test Hello Farhan",
+			request : "Farhan",
+			expected : "Hello Farhan",
+		}, 
+		{
+			name : "Test Hello Husyen",
+			request : "Husyen",
+			expected : "Hello Husyen",
+		},
+	}
+
+	for _, test  := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			result := HelloWorld(test.request)
+			require.Equal(t, test.expected, result)
+		})
+	}
+}
+
 // function subtest memungkinkan untuk memiliki test didalam unit test
 func TestSubTest(t *testing.T) {
 	t.Run("Farhan", func(t *testing.T) {
