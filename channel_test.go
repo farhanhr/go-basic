@@ -25,6 +25,25 @@ func TestCreateChannel(t *testing.T)  {
 	time.Sleep(5 * time.Second)
 }
 
+func GiveMeResponse(channel chan string) {
+	time.Sleep(2 * time.Second)
+	channel <- "Sedang Belajar Goroutine"
+}
+
+func TestCreateChannelAsParameter(t *testing.T)  {
+	//membuat channel
+	channel := make(chan string)
+	//Menutup channel
+	defer close(channel)
+
+	go GiveMeResponse(channel)
+
+	data := <- channel
+	fmt.Println(data)
+
+	time.Sleep(5 * time.Second)
+}
+
 // func TestCreateChannel(t *testing.T)  {
 // 	//membuat channel
 // 	channel := make(chan string)
