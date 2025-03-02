@@ -44,6 +44,26 @@ func TestCreateChannelAsParameter(t *testing.T)  {
 	time.Sleep(5 * time.Second)
 }
 
+func TestBufferedChannel(t *testing.T) {
+	channel := make(chan string, 5) // Kode ini berarti membuat channel dengan buffer 5, Jadi setiap data yang dikirim ke channel dan belum diambil akan ditempatkan di antrian buffer, jadi selama slot buffer masih ada, jika menambahkan data saat ada data yang belum diambil, tidak akan menyebabkan deadlock hingga slot buffernya habis. Karena datanya akan ditempatkan di buffer hingga ada yang mengambil
+	defer close(channel)
+
+	go func ()  {
+		channel <- "Data Farhan"
+		channel <- "Data Husyen"
+		channel <- "Data Ramadhan"
+	}()
+
+	go func ()  {
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+		fmt.Println(<-channel)
+	}()
+
+	time.Sleep(2 * time.Second)
+	fmt.Println("Selesai Mengirim Data")
+}
+
 // func TestCreateChannel(t *testing.T)  {
 // 	//membuat channel
 // 	channel := make(chan string)
