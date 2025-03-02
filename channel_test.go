@@ -2,6 +2,7 @@ package golang_goroutine
 
 import (
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -62,6 +63,24 @@ func TestBufferedChannel(t *testing.T) {
 
 	time.Sleep(2 * time.Second)
 	fmt.Println("Selesai Mengirim Data")
+}
+
+func TestRangeChannel(t *testing.T) {
+	channel := make(chan string)
+
+	go func ()  {
+		for i:= 0; i<10; i++ {
+			channel <- "Data dari perulangan " + strconv.Itoa(i+1)
+		}	
+
+		close(channel)
+	}()
+
+	for data := range channel {
+		fmt.Println("Menerima Data", data)
+	}
+
+	fmt.Println("Selesai Mengirim dan Menerima data")
 }
 
 // func TestCreateChannel(t *testing.T)  {
