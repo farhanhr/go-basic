@@ -129,3 +129,35 @@ func TestSqlInjection(t *testing.T) {
 	}
 
 }
+
+func TestSqlInjectionSafe(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	username := "admin'; #"
+	password := "wrong"
+
+	qry := "SELECT username FROM users WHERE username = ? AND password = ?  LIMIT 1"
+
+	rows, err := db.QueryContext(ctx, qry, username, password)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+	
+	if rows.Next() {
+		var username string
+		err := rows.Scan(&username)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Selamat datang", username)
+	} else {
+		fmt.Println("Login Gagal")
+	}
+
+}
