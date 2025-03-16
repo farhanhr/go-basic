@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -158,6 +159,45 @@ func TestSqlInjectionSafe(t *testing.T) {
 		fmt.Println("Selamat datang", username)
 	} else {
 		fmt.Println("Login Gagal")
+	}
+
+}
+
+func TestTransaction(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+	tx, err := db.Begin()
+
+	if err != nil {
+		panic(err)
+	}
+
+	script := "INSERT INTO comments(email, comment) VALUES (?,?)"
+	// do transaction
+	for i := 0; i<10; i++ {
+		email := "Farhan" + strconv.Itoa(i) + "@mail.com"
+		comment := "Komentar" + strconv.Itoa(i)
+
+		result, err := tx.ExecContext(ctx, script, email, comment)
+		if err != nil {
+			panic(err)
+		}
+
+		id, err := result.LastInsertId()
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println("comment id", id)
+	}
+	
+	
+	err = tx.Commit()
+	
+	if err != nil {
+		panic(err)
 	}
 
 }
