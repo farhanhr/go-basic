@@ -119,7 +119,7 @@ func TestSqlInjection(t *testing.T) {
 	
 	if rows.Next() {
 		var username string
-		rows.Scan(&username)
+		err := rows.Scan(&username)
 		if err != nil {
 			panic(err)
 		}
