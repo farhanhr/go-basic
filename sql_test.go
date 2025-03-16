@@ -39,6 +39,7 @@ func TestQuerySql(t *testing.T)  {
 		panic(err)
 	}
 
+	defer rows.Close()
 	for rows.Next() {
 		var id, name string
 		err := rows.Scan(&id, &name)
@@ -49,7 +50,6 @@ func TestQuerySql(t *testing.T)  {
 		fmt.Println("Name:", name)	
 	}
 
-	defer rows.Close()
 }
 
 func TestSqlComplex(t *testing.T) {
@@ -95,4 +95,37 @@ func TestSqlComplex(t *testing.T) {
 		fmt.Println("created_at:", created_at)	
 		fmt.Println("married:", married)	
 	}
+}
+
+func TestSqlInjection(t *testing.T) {
+	db := GetConnection()
+	defer db.Close()
+
+	ctx := context.Background()
+
+	username := "admin'; #"
+	password := "wrong"
+
+	qry := "SELECT username FROM users WHERE username = '"+ username +
+	"' AND password = '"+ password +"' LIMIT 1"
+
+	rows, err := db.QueryContext(ctx, qry)
+
+	if err != nil {
+		panic(err)
+	}
+
+	defer rows.Close()
+	
+	if rows.Next() {
+		var username string
+		rows.Scan(&username)
+		if err != nil {
+			panic(err)
+		}
+		fmt.Println("Selamat datang", username)
+	} else {
+		fmt.Println("Login Gagal")
+	}
+
 }
