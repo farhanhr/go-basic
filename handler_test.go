@@ -47,6 +47,11 @@ func TestServeMux(t *testing.T) {
 }
 
 func TestRequest(t *testing.T) {
+	/*
+	Response Writer adalah objek di Golang yang digunakan untuk membuat respons. 
+	Response Writer digunakan bersamaan dengan Request yang menampung 
+	permintaan HTTP dari klien.
+	*/
 	var handler http.HandlerFunc = func(writer http.ResponseWriter, request *http.Request) {
 		// logic web
 

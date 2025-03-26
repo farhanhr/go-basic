@@ -15,6 +15,9 @@ func HelloHandler(writer http.ResponseWriter, request *http.Request) {
 
 func TestHttp(t *testing.T) {
 	request := httptest.NewRequest(http.MethodGet, "http://localhost:8080/hello", nil)
+	/* recorder adalah salah satu implementasi dari response writer
+	Response recorder merupakan struct bantuan untuk merekam Http 
+	response dari hasil testing */
 	recorder := httptest.NewRecorder()
 
 	HelloHandler(recorder, request)
