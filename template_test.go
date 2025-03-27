@@ -10,7 +10,7 @@ import (
 )
 
 func SimpleHtmlFile(w http.ResponseWriter, r *http.Request) {
-	t := template.Must(template.ParseFiles("./templates/simple.html"))
+	t := template.Must(template.ParseFiles("./templates/simple.gohtml"))
 	t.ExecuteTemplate(w, "simple.html", "Its a text from go html template")
 }
 
