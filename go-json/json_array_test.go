@@ -59,7 +59,7 @@ func TestJsonArrayComplex(t *testing.T) {
 func TestJsonArrayComplexDecode(t *testing.T) {
 	jsonString := `{"FirstName":"Farhan","MiddleName":"","LastName":"","Hobbies":null,"Adresses":[{"Street":"Jalan Merdeka No. 45","Country":"Indonesia","PostalCode":"12345"},{"Street":"Main Street 101","Country":"USA","PostalCode":"67890"}]}`
 	
-		jsonBytes := []byte(jsonString)
+	jsonBytes := []byte(jsonString)
 
 	customer := &Customer{}
 	
