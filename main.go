@@ -5,6 +5,7 @@ import (
 	"farhanhr/go-restful-api/controller"
 	"farhanhr/go-restful-api/exception"
 	"farhanhr/go-restful-api/helper"
+	"farhanhr/go-restful-api/middleware"
 	"farhanhr/go-restful-api/repository"
 	"farhanhr/go-restful-api/service"
 	"net/http"
@@ -34,7 +35,7 @@ func main() {
 
 	server := http.Server{
 		Addr: "localhost:3000",
-		Handler: router,
+		Handler: middleware.NewAuthMiddleware(router),
 	}
 
 	err := server.ListenAndServe()
