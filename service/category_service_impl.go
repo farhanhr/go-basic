@@ -44,8 +44,6 @@ func (service CategoryServiceImpl) Create(ctx context.Context, request web.Categ
 }
 
 func (service *CategoryServiceImpl) Update(ctx context.Context, request web.CategoryUpdateRequest) web.CategoryResponse {
-	err := service.Validate.Struct(request)
-	helper.PanicIfError(err)
 
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
@@ -56,6 +54,9 @@ func (service *CategoryServiceImpl) Update(ctx context.Context, request web.Cate
 	if err != nil {
 		panic(exception.NewNotFoundError(err.Error()))
 	}
+
+	err = service.Validate.Struct(request)
+	helper.PanicIfError(err)
 
 	category.Name = request.Name
 
