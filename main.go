@@ -3,9 +3,12 @@ package main
 import (
 	"farhanhr/go-restful-api/app"
 	"farhanhr/go-restful-api/controller"
+	"farhanhr/go-restful-api/helper"
 	"farhanhr/go-restful-api/repository"
 	"farhanhr/go-restful-api/service"
-
+	"net/http"
+	
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/go-playground/validator/v10"
 	"github.com/julienschmidt/httprouter"
 )
@@ -26,5 +29,11 @@ func main() {
 	router.PUT("/api/categories/:categoryId", categoryController.Update)
 	router.DELETE("/api/categories/:categoryId", categoryController.Delete)
 
+	server := http.Server{
+		Addr: "localhost:3000",
+		Handler: router,
+	}
 
+	err := server.ListenAndServe()
+	helper.PanicIfError(err)
 }
