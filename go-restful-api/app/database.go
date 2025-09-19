@@ -7,7 +7,7 @@ import (
 )
 
 func NewDB() *sql.DB {
-	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/go-restful-api")
+	db, err := sql.Open("mysql", "root@tcp(localhost:3306)/go-migrate-restful-api")
 	helper.PanicIfError(err)
 
 	db.SetMaxIdleConns(4)
@@ -17,3 +17,9 @@ func NewDB() *sql.DB {
 
 	return db
 }
+
+//create migrate
+// migrate create -ext sql -dir db/migration table_name
+
+//run migrate
+// migrate --database "mysql://root@tcp(localhost:3306)/go-migrate-restful-api" -path db/migrations up
